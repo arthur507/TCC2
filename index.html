@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Painel - Império</title>
+
+  <!-- Fontes (usadas: Inter para UI; carregamento via Google Fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <!-- substituiu o ícone pelo logo enviado -->
+        <img src="/mnt/data/lion.png" alt="Logo King School" class="brand-logo" />
+        <span class="brand-text">IMPÉRIO</span>
+      </div>
+
+      <nav>
+        <button class="nav-btn active" data-panel="login">Login</button>
+        <button class="nav-btn" data-panel="meuPerfil">Meu Perfil</button>
+        <button class="nav-btn" data-panel="minhaTurma">Minha Turma</button>
+        <button class="nav-btn" data-panel="atividades">Atividades</button>
+        <button class="nav-btn" data-panel="materias">Matérias</button>
+        <button class="nav-btn" data-panel="notas">Notas</button>
+        <button class="nav-btn" data-panel="sair">Sair</button>
+      </nav>
+    </aside>
+
+    <main class="main">
+      <!-- LOGIN -->
+      <section id="login" class="panel active">
+        <div class="card login-card">
+          <h2>Entrar no Sistema</h2>
+          <form id="loginForm" autocomplete="off">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="seu@exemplo.com" required />
+
+            <label for="password">Senha</label>
+            <input id="password" type="password" placeholder="Digite sua senha" required />
+
+            <div class="actions">
+              <button type="submit" class="btn">Entrar</button>
+            </div>
+
+            <p id="loginMessage" class="msg"></p>
+
+            <div class="hint">
+              <strong>Emails permitidos:</strong>
+              <ul>
+                <li>rosana@admin.com (senha: admin123)</li>
+                <li>arthur@aluno.com (senha: aluno123)</li>
+              </ul>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- MEU PERFIL -->
+      <section id="meuPerfil" class="panel">
+        <div class="card profile">
+          <div class="avatar">👨‍🎓</div>
+          <h3 id="userName">arthur</h3>
+          <p id="userEmail">arthur@adm.com</p>
+          <div class="profile-meta">
+            <div><strong>Função:</strong> <span id="userRole">Aluno</span></div>
+            <div><strong>Turma:</strong> <span id="userClass">Sala 07</span></div>
+            <div><strong>CPF:</strong> <span id="userClass">033-456-789-10</span></div>
+            <div><strong>Matrícula:</strong> <span id="userClass">00990675</span></div>
+            <div><strong>Nome:</strong> <span id="userClass">Arthur Guimarães</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MINHA TURMA -->
+      <section id="minhaTurma" class="panel">
+        <div class="card list">
+          <h3>Minha Turma - Sala 07</h3>
+          <div class="grid-members">
+            <div class="member">
+              <div class="member-avatar">🧑‍🏫</div>
+              <div class="member-info">
+                <strong>Rosana</strong>
+                <span>rosana@admin.com</span>
+              </div>
+            </div>
+            <div class="member">
+              <div class="member-avatar">👨‍🎓</div>
+              <div class="member-info">
+                <strong>Robertson</strong>
+                <span>robertson@aluno.com</span>
+              </div>
+            </div>
+            <div class="member">
+              <div class="member-avatar">👩‍🎓</div>
+              <div class="member-info">
+                <strong>Ana Clara</strong>
+                <span>ana@aluno.com</span>
+              </div>
+            </div>
+            <div class="member">
+              <div class="member-avatar">👨‍🎓</div>
+              <div class="member-info">
+                <strong>Arthur Guimarães</strong>
+                <span>Arthur@aluno.com</span>
+              </div>
+            </div>
+            <div class="member">
+              <div class="member-avatar">👨‍🎓</div>
+              <div class="member-info">
+                <strong>Caio Okuma</strong>
+                <span>Caio@aluno.com</span>
+          </div>
+        </div>
+        <div class="member">
+              <div class="member-avatar">👨‍🎓</div>
+              <div class="member-info">
+                <strong>Ramiro</strong>
+                <span>Ramiro@aluno.com</span>
+      </section>
+
+      <!-- ATIVIDADES -->
+      <section id="atividades" class="panel">
+        <div class="card">
+          <h3>Atividades Pendentes</h3>
+          <div class="activity-list">
+            <article class="activity-card">
+              <div class="activity-title">Relatório sobre Revolução Francesa</div>
+              <div class="activity-meta">Prazo: 2025-12-20 • <span class="tag history">História</span></div>
+              <p>Entregar um relatório de 3 páginas sobre a Revolução Francesa.</p>
+              <button class="btn concluir-btn">Concluir</button>
+
+            </article>
+
+            <article class="activity-card">
+              <div class="activity-title">Exercícios de Equações</div>
+              <div class="activity-meta">Prazo: 2025-12-15 • <span class="tag math">Matemática</span></div>
+              <p>Resolver os exercícios da página 45 a 50 do livro.</p>
+              <button class="btn concluir-btn">Concluir</button>
+
+              
+            </article>
+
+            <article class="activity-card">
+              <div class="activity-title">Mapa do Brasil</div>
+              <div class="activity-meta">Prazo: 2025-12-18 • <span class="tag geo">Geografia</span></div>
+              <p>Criar um mapa com as regiões do Brasil.</p>
+              <button class="btn concluir-btn">Concluir</button>
+
+            </article>
+
+             <article class="activity-card">
+              <div class="activity-title">Redação</div>
+              <div class="activity-meta">Prazo: 2025-12-18 • <span class="tag geo">Português</span></div>
+              <p>Escreva um texto disertativo-argumentativo. Tema: Perspectivas acerca do envelhecimento no Brasil.</p>
+              <button class="btn concluir-btn">Concluir</button>
+
+            </article>
+
+             <article class="activity-card">
+              <div class="activity-title">Task 05</div>
+              <div class="activity-meta">Prazo: 2025-12-18 • <span class="tag geo">Inglês</span></div>
+              <p>Answer the questions: 
+                1. Complete the sentence: "She ___ to the gym every morning.
+                <button class="btn concluir-btn">Concluir</button>
+
+            </article>
+
+             <article class="activity-card">
+              <div class="activity-title">Atividade</div>
+              <div class="activity-meta">Prazo: 2025-12-18 • <span class="tag geo">Biologia</span></div>
+              <p>Páginas 100 a 105 do livro.</p>
+              <button class="btn concluir-btn">Concluir</button>
+
+            </article>
+
+            <h3 style="margin-top:32px;">Atividades Concluídas</h3>
+            <div id="atividadesConcluidas" class="activity-list"></div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- MATÉRIAS -->
+      <section id="materias" class="panel">
+        <div class="card">
+          <h3>Minhas Matérias</h3>
+          <div class="subjects-grid">
+            <div class="subject">
+              <div class="subject-icon">📜</div>
+              <div>
+                <strong>História</strong>
+                <div class="teacher">Prof. Manoel</div>
+              </div>
+            </div>
+
+            <div class="subject">
+              <div class="subject-icon">🌍</div>
+              <div>
+                <strong>Geografia</strong>
+                <div class="teacher">Prof. Juliano</div>
+              </div>
+            </div>
+
+            <div class="subject">
+              <div class="subject-icon">➗</div>
+              <div>
+                <strong>Matemática</strong>
+                <div class="teacher">Profa. Franciele</div>
+              </div>
+            </div>
+
+            <div class="subject">
+              <div class="subject-icon"></div>
+              <div>
+                <strong>Biologia</strong>
+                <div class="teacher">Prof. Massao</div>
+              </div>
+            </div>
+
+            <div class="subject">
+              <div class="subject-icon"></div>
+              <div>
+                <strong>Quimica</strong>
+                <div class="teacher">Prof. Robert</div>
+              </div>
+            </div>
+
+            <div class="subject">
+              <div class="subject-icon"></div>
+              <div>
+                <strong>Física</strong>
+                <div class="teacher">Prof. Israel</div>
+              </div>
+            </div>
+
+            <div class="subject">
+              <div class="subject-icon"></div>
+              <div>
+                <strong>Inglês</strong>
+                <div class="teacher">Prof. Thiago</div>
+              </div>
+            </div>
+
+            <div class="subject">
+              <div class="subject-icon"></div>
+              <div>
+                <strong>Educação Física</strong>
+                <div class="teacher">Prof. Sérgio</div>
+              </div>
+            </div>
+
+            <div class="subject">
+              <div class="subject-icon">📝</div>
+              <div>
+                <strong>Português</strong>
+                <div class="teacher">Prof. Tarik</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NOTAS -->
+      <section id="notas" class="panel">
+        <div class="card grades">
+          <h3>Minhas Notas</h3>
+          <table>
+            <thead>
+              <tr><th>Matéria</th><th>1º Bim</th><th>2º Bim</th><th>Média</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>História</td><td>8.5</td><td>9.0</td><td>8.75</td></tr>
+              <tr><td>Geografia</td><td>7.0</td><td>8.2</td><td>7.6</td></tr>
+              <tr><td>Matemática</td><td>6.0</td><td>8.5</td><td>7.4</td></tr>
+              <tr><td>Português</td><td>7.2</td><td>9.8</td><td>10.0</td></tr>
+              <tr><td>Quimica</td><td>4.3</td><td>5.5</td><td>10.0</td></tr>
+              <tr><td>Biologia</td><td>7.0</td><td>7.9</td><td>8.1</td></tr>
+              <tr><td>Física</td><td>8.0</td><td>9.5</td><td>10.0</td></tr>
+              <tr><td>Inglês</td><td>6.0</td><td>4.2</td><td>8.6</td></tr>
+              <tr><td>Educação Física</td><td>10.0</td><td>10.0</td><td>10.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Sair (simples) -->
+      <section id="sair" class="panel">
+        <div class="card">
+          <h3>Sair</h3>
+          <p>Clique em <button id="logoutBtn" class="link-btn">Sair</button> para voltar ao login.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

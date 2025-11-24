@@ -1,0 +1,116 @@
+:root{
+  --red:#8b2e2a;       /* painel */
+  --red-dark:#6d2623;
+  --beige:#efe9d6;     /* cards (clareei um pouco para contraste) */
+  --beige-dark:#d9d2b8;
+  --dark:#0f1613;      /* fundo lateral */
+  --glass: rgba(0,0,0,0.35);
+}
+
+/* Reset / fonte */
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  background:linear-gradient(180deg,#0b0b0b,#0f1110);
+  color:var(--dark);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* App layout */
+.app{display:flex;min-height:100vh}
+.sidebar{
+  width:220px; /* alarguei um pouco para acomodar texto e logo */
+  background:linear-gradient(180deg,var(--red),var(--red-dark));
+  position:fixed;left:0;top:0;bottom:0;padding:26px 18px;display:flex;flex-direction:column;gap:18px;
+  border-right:2px solid rgba(0,0,0,0.25);
+  box-shadow: 6px 0 18px rgba(0,0,0,0.6) inset;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-logo{width:44px;height:44px;object-fit:contain;border-radius:6px;background:rgba(0,0,0,0.06);padding:6px}
+.brand-text{color:var(--beige);font-weight:700;letter-spacing:1px;font-size:18px}
+
+/* Nav */
+nav{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.nav-btn{
+  background:transparent;border:none;color:var(--beige);padding:10px 12px;border-radius:10px;text-align:left;cursor:pointer;font-weight:600;
+  display:flex;align-items:center;gap:8px;
+  transition:all .18s ease;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset;
+}
+.nav-btn:hover{transform:translateX(4px);background:rgba(0,0,0,0.06)}
+.nav-btn.active{background:rgba(0,0,0,0.12);box-shadow:0 6px 14px rgba(0,0,0,0.35)}
+
+/* Main area */
+.main{flex:1;padding:40px;margin-left:220px;min-height:100vh}
+.panel{display:none}
+.panel.active{display:block}
+
+/* Cards */
+.card{
+  background:var(--beige);
+  color:var(--dark);
+  padding:22px;border-radius:12px;
+  box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+  max-width:980px;
+}
+
+/* Login */
+.login-card{width:360px;margin-top:24px}
+.login-card h2{margin:0 0 14px 0;font-size:22px}
+label{display:block;font-size:13px;margin-top:12px;color:#6b6350}
+input{width:100%;padding:10px 12px;border:1px solid var(--beige-dark);border-radius:8px;margin-top:8px;background:transparent}
+.btn{margin-top:16px;background:var(--red-dark);color:var(--beige);border:none;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}
+.msg{margin-top:8px;color:#6a1919}
+
+/* hints */
+.hint{margin-top:14px;font-size:13px;color:#564c3c;background:rgba(0,0,0,0.03);padding:10px;border-radius:8px}
+
+/* Profile */
+.profile{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.avatar{font-size:56px;background:rgba(0,0,0,0.04);padding:12px;border-radius:50%}
+.profile-meta{display:flex;gap:16px;color:#5c5442}
+
+/* Members grid */
+.grid-members{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.member{display:flex;gap:12px;align-items:center;background:rgba(0,0,0,0.03);padding:10px;border-radius:10px}
+.member-avatar{font-size:28px;background:rgba(0,0,0,0.04);padding:8px;border-radius:8px}
+.member-info strong{display:block}
+.member-info span{font-size:12px;color:#6b6350}
+
+/* Activities */
+.activity-list{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.activity-card{background:var(--beige-dark);padding:12px;border-radius:10px;box-shadow:0 6px 14px rgba(0,0,0,0.06)}
+.activity-title{font-weight:700}
+.activity-meta{font-size:13px;color:#6b6350;margin-top:6px}
+.tag{display:inline-block;padding:6px 8px;border-radius:18px;font-size:12px;margin-left:6px}
+.tag.history{background:#ffd9d9;color:#6b1a1a}
+.tag.math{background:#e6f1ff;color:#0b4a84}
+.tag.geo{background:#fff1d9;color:#6b4a0b}
+
+/* Subjects */
+.subjects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.subject{display:flex;gap:12px;align-items:center;background:transparent;padding:10px;border-radius:10px}
+.subject-icon{font-size:28px}
+
+/* Grades table */
+.grades table{width:100%;border-collapse:collapse;margin-top:12px}
+.grades th,.grades td{padding:10px;border-bottom:1px solid rgba(0,0,0,0.06);text-align:left}
+
+/* small utilities */
+.link-btn{background:transparent;border:none;color:var(--red-dark);cursor:pointer;font-weight:700}
+
+/* responsive */
+@media (max-width:900px){
+  .sidebar{width:72px;padding:18px}
+  .brand-text{display:none}
+  .main{margin-left:72px;padding:22px}
+  .grid-members{grid-template-columns:1fr}
+  .subjects-grid{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .main{padding:14px}
+  .login-card{width:100%}
+}
