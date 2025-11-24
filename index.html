@@ -3,14 +3,142 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Painel - Império</title>
+  <title>Painel - Império (Atualizado)</title>
 
   <!-- Fontes (usadas: Inter para UI; carregamento via Google Fonts) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css" />
+  <style>
+:root{
+  --red:#8b2e2a;       /* painel */
+  --red-dark:#6d2623;
+  --beige:#efe9d6;     /* cards (clareei um pouco para contraste) */
+  --beige-dark:#d9d2b8;
+  --dark:#0f1613;      /* fundo lateral */
+  --glass: rgba(0,0,0,0.35);
+}
+
+/* Reset / fonte */
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{
+  margin:0;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+  background:linear-gradient(180deg,#0b0b0b,#0f1110);
+  color:var(--dark);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* App layout */
+.app{display:flex;min-height:100vh}
+.sidebar{
+  width:220px; /* alarguei um pouco para acomodar texto e logo */
+  background:linear-gradient(180deg,var(--red),var(--red-dark));
+  position:fixed;left:0;top:0;bottom:0;padding:26px 18px;display:flex;flex-direction:column;gap:18px;
+  border-right:2px solid rgba(0,0,0,0.25);
+  box-shadow: 6px 0 18px rgba(0,0,0,0.6) inset;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-logo{width:44px;height:44px;object-fit:contain;border-radius:6px;background:rgba(0,0,0,0.06);padding:6px}
+.brand-text{color:var(--beige);font-weight:700;letter-spacing:1px;font-size:18px}
+
+/* Nav */
+nav{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.nav-btn{
+  background:transparent;border:none;color:var(--beige);padding:10px 12px;border-radius:10px;text-align:left;cursor:pointer;font-weight:600;
+  display:flex;align-items:center;gap:8px;
+  transition:all .18s ease;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset;
+}
+.nav-btn:hover{transform:translateX(4px);background:rgba(0,0,0,0.06)}
+.nav-btn.active{background:rgba(0,0,0,0.12);box-shadow:0 6px 14px rgba(0,0,0,0.35)}
+
+/* Main area */
+.main{flex:1;padding:40px;margin-left:220px;min-height:100vh}
+.panel{display:none}
+.panel.active{display:block}
+
+/* Cards */
+.card{
+  background:var(--beige);
+  color:var(--dark);
+  padding:22px;border-radius:12px;
+  box-shadow: 0 14px 40px rgba(62, 197, 9, 0);
+  max-width:980px;
+}
+
+/* Login */
+.login-card{width:360px;margin-top:24px}
+.login-card h2{margin:0 0 14px 0;font-size:22px}
+label{display:block;font-size:13px;margin-top:12px;color:#6b6350}
+input{width:100%;padding:10px 12px;border:1px solid var(--beige-dark);border-radius:8px;margin-top:8px;background:transparent}
+.btn{margin-top:16px;background:var(--red-dark);color:var(--beige);border:none;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}
+.msg{margin-top:8px;color:#6a1919}
+
+/* hints */
+.hint{margin-top:14px;font-size:13px;color:#564c3c;background:rgba(0,0,0,0.03);padding:10px;border-radius:8px}
+
+/* Profile */
+.profile{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.avatar{font-size:56px;background:rgba(0,0,0,0.04);padding:12px;border-radius:50%}
+.profile-meta{display:flex;gap:16px;color:#5c5442}
+
+/* Members grid */
+.grid-members{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.member{display:flex;gap:12px;align-items:center;background:rgba(0,0,0,0.03);padding:10px;border-radius:10px}
+.member-avatar{font-size:28px;background:rgba(0,0,0,0.04);padding:8px;border-radius:8px}
+.member-info strong{display:block}
+.member-info span{font-size:12px;color:#6b6350}
+
+/* Activities */
+.activity-list{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+.activity-card{background:var(--beige-dark);padding:12px;border-radius:10px;box-shadow:0 6px 14px rgba(0,0,0,0.06)}
+.activity-title{font-weight:700}
+.activity-meta{font-size:13px;color:#6b6350;margin-top:6px}
+.tag{display:inline-block;padding:6px 8px;border-radius:18px;font-size:12px;margin-left:6px}
+.tag.history{background:#ffd9d9;color:#6b1a1a}
+.tag.math{background:#e6f1ff;color:#0b4a84}
+.tag.geo{background:#fff1d9;color:#6b4a0b}
+
+/* Subjects */
+.subjects-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.subject{display:flex;gap:12px;align-items:center;background:transparent;padding:10px;border-radius:10px}
+.subject-icon{font-size:28px}
+
+/* Grades table */
+.grades table{width:100%;border-collapse:collapse;margin-top:12px}
+.grades th,.grades td{padding:10px;border-bottom:1px solid rgba(0,0,0,0.06);text-align:left}
+
+/* small utilities */
+.link-btn{background:transparent;border:none;color:var(--red-dark);cursor:pointer;font-weight:700}
+
+/* Materials panel */
+.materials-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+.material-card{background:var(--beige-dark);padding:12px;border-radius:10px}
+.material-card h4{margin:0 0 8px 0}
+.material-meta{font-size:13px;color:#6b6350;margin-bottom:8px}
+.material-resources{font-size:14px}
+
+/* Coordination */
+.notice{background:rgba(255,240,240,0.9);padding:12px;border-left:4px solid var(--red-dark);border-radius:8px;margin-bottom:12px}
+
+/* responsive */
+@media (max-width:900px){
+  .sidebar{width:72px;padding:18px}
+  .brand-text{display:none}
+  .main{margin-left:72px;padding:22px}
+  .grid-members{grid-template-columns:1fr}
+  .subjects-grid{grid-template-columns:1fr}
+  .materials-grid{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  .main{padding:14px}
+  .login-card{width:100%}
+}
+  </style>
 </head>
 <body>
   <div class="app">
@@ -18,7 +146,7 @@
       <div class="brand">
         <!-- substituiu o ícone pelo logo enviado -->
         <img src="/mnt/data/lion.png" alt="Logo King School" class="brand-logo" />
-        <span class="brand-text">IMPÉRIO</span>
+        <span class="brand-text">King School</span>
       </div>
 
       <nav>
@@ -27,7 +155,9 @@
         <button class="nav-btn" data-panel="minhaTurma">Minha Turma</button>
         <button class="nav-btn" data-panel="atividades">Atividades</button>
         <button class="nav-btn" data-panel="materias">Matérias</button>
+        <button class="nav-btn" data-panel="materiasTodos">Ver Matérias</button>
         <button class="nav-btn" data-panel="notas">Notas</button>
+        <button class="nav-btn" data-panel="coordenacao">Coordenação</button>
         <button class="nav-btn" data-panel="sair">Sair</button>
       </nav>
     </aside>
@@ -70,9 +200,8 @@
           <div class="profile-meta">
             <div><strong>Função:</strong> <span id="userRole">Aluno</span></div>
             <div><strong>Turma:</strong> <span id="userClass">Sala 07</span></div>
-            <div><strong>CPF:</strong> <span id="userClass">033-456-789-10</span></div>
-            <div><strong>Matrícula:</strong> <span id="userClass">00990675</span></div>
-            <div><strong>Nome:</strong> <span id="userClass">Arthur Guimarães</span></div>
+            <div><strong>CPF:</strong> <span id="userCpf">123.456.789-10</span></div>
+            <div><strong>Matrícula:</strong> <span id="userMat">00990675</span></div>
           </div>
         </div>
       </section>
@@ -186,7 +315,7 @@
         </div>
       </section>
 
-      <!-- MATÉRIAS -->
+      <!-- MATÉRIAS (resumo) -->
       <section id="materias" class="panel">
         <div class="card">
           <h3>Minhas Matérias</h3>
@@ -216,7 +345,7 @@
             </div>
 
             <div class="subject">
-              <div class="subject-icon"></div>
+              <div class="subject-icon">🧬</div>
               <div>
                 <strong>Biologia</strong>
                 <div class="teacher">Prof. Massao</div>
@@ -224,15 +353,15 @@
             </div>
 
             <div class="subject">
-              <div class="subject-icon"></div>
+              <div class="subject-icon">⚗️</div>
               <div>
-                <strong>Quimica</strong>
+                <strong>Química</strong>
                 <div class="teacher">Prof. Robert</div>
               </div>
             </div>
 
             <div class="subject">
-              <div class="subject-icon"></div>
+              <div class="subject-icon">🔭</div>
               <div>
                 <strong>Física</strong>
                 <div class="teacher">Prof. Israel</div>
@@ -240,7 +369,7 @@
             </div>
 
             <div class="subject">
-              <div class="subject-icon"></div>
+              <div class="subject-icon">🇬🇧</div>
               <div>
                 <strong>Inglês</strong>
                 <div class="teacher">Prof. Thiago</div>
@@ -248,7 +377,7 @@
             </div>
 
             <div class="subject">
-              <div class="subject-icon"></div>
+              <div class="subject-icon">🏃‍♂️</div>
               <div>
                 <strong>Educação Física</strong>
                 <div class="teacher">Prof. Sérgio</div>
@@ -262,6 +391,25 @@
                 <div class="teacher">Prof. Tarik</div>
               </div>
             </div>
+          </div>
+
+          <div style="margin-top:18px;">
+            <button class="btn" id="btnVerMaterias">Ver todo o material de apoio</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- MATÉRIAS - PÁGINA COMPLETA DE MATERIAIS -->
+      <section id="materiasTodos" class="panel">
+        <div class="card">
+          <h3>Material de Apoio - Todas as Matérias</h3>
+
+          <div class="materials-grid" id="materialsGrid">
+            <!-- Cards serão inseridos via JS -->
+          </div>
+
+          <div style="margin-top:18px;">
+            <button class="btn" id="btnVoltarMaterias">Voltar</button>
           </div>
         </div>
       </section>
@@ -279,13 +427,33 @@
               <tr><td>Geografia</td><td>7.0</td><td>8.2</td><td>7.6</td></tr>
               <tr><td>Matemática</td><td>6.0</td><td>8.5</td><td>7.4</td></tr>
               <tr><td>Português</td><td>7.2</td><td>9.8</td><td>10.0</td></tr>
-              <tr><td>Quimica</td><td>4.3</td><td>5.5</td><td>10.0</td></tr>
+              <tr><td>Química</td><td>4.3</td><td>5.5</td><td>10.0</td></tr>
               <tr><td>Biologia</td><td>7.0</td><td>7.9</td><td>8.1</td></tr>
               <tr><td>Física</td><td>8.0</td><td>9.5</td><td>10.0</td></tr>
               <tr><td>Inglês</td><td>6.0</td><td>4.2</td><td>8.6</td></tr>
               <tr><td>Educação Física</td><td>10.0</td><td>10.0</td><td>10.0</td></tr>
             </tbody>
           </table>
+        </div>
+      </section>
+
+      <!-- COORDENAÇÃO -->
+      <section id="coordenacao" class="panel">
+        <div class="card">
+          <h3>Coordenação</h3>
+
+          <div class="notice">
+            <strong>Aviso Importante:</strong>
+            <p style="margin:6px 0 0 0;">(Encerramento das aulas dia 12/12)</p>
+          </div>
+
+          <div class="notice" style="background:rgba(240,248,255,0.9);border-left-color:var(--red-dark);">
+            <strong>Outros avisos:</strong>
+            <ul style="margin:8px 0 0 12px;color:#6b6350;">
+              <li>Reunião pedagógica: 05/12 às 14:00 - Sala de Professores.</li>
+              <li>Entrega de materiais didáticos: 08/12 - Secretaria.</li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -300,6 +468,372 @@
     </main>
   </div>
 
-  <script src="script.js"></script>
+<script>
+// emails permitidos — apenas esses dois serão aceitos (igual ao seu original)
+const ALLOWED_EMAILS = [
+  'rosana@admin.com',
+  'robertson@aluno.com',
+  'arthur@aluno.com'
+];
+
+// Navegação entre painéis
+document.querySelectorAll('.nav-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const panel = btn.dataset.panel;
+    document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+    const target = document.getElementById(panel);
+    if(target) target.classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+// Elements
+const loginForm = document.getElementById('loginForm');
+const loginMessage = document.getElementById('loginMessage');
+const userNameEl = document.getElementById('userName');
+const userEmailEl = document.getElementById('userEmail');
+const userRoleEl = document.getElementById('userRole');
+const userClassEl = document.getElementById('userClass');
+const userCpf = document.getElementById('userCpf');
+const userMat = document.getElementById('userMat');
+
+// Login
+loginForm.addEventListener('submit', function(e){
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const password = document.getElementById('password').value;
+
+  // validação: apenas emails permitidos
+  if(!ALLOWED_EMAILS.includes(email)){
+    loginMessage.style.color = '#7a1e1e';
+    loginMessage.textContent = 'Email não autorizado.';
+    return;
+  }
+
+  if(!password){
+    loginMessage.style.color = '#7a1e1e';
+    loginMessage.textContent = 'Informe a senha.';
+    return;
+  }
+
+  // simulação de senha (apenas para demo)
+  const ok = (email === 'rosana@admin.com' && password === 'admin123') ||
+             (email === 'arthur@aluno.com' && password === 'aluno123') ||
+             (email === 'robertson@aluno.com' && password === 'aluno123');
+
+  if(!ok){
+    loginMessage.style.color = '#7a1e1e';
+    loginMessage.textContent = 'Senha incorreta.';
+    return;
+  }
+
+  // login bem-sucedido
+  loginMessage.style.color = '#1a5f1a';
+  loginMessage.textContent = 'Login realizado com sucesso!';
+  
+
+  // preencher perfil
+  const displayName = email.split('@')[0].replace('.', ' ');
+  const nameCapitalized = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+  userNameEl.textContent = nameCapitalized;
+  userEmailEl.textContent = email;
+
+  // atribuições de função/curso simples
+  if(email.includes('admin')) {
+    userRoleEl.textContent = 'Administrador';
+    userClassEl.textContent = 'Sala 07';
+    userCpf.textContent = '022.876.543-21';
+    userMat.textContent = '';
+  } else {
+    userRoleEl.textContent = 'Aluno';
+    userClassEl.textContent = 'A1';
+    userCpf.textContent = '123.456.789.-10';
+    userMat.textContent = '022.876.543-21';
+  }
+
+  // vai para perfil
+  const perfilBtn = Array.from(document.querySelectorAll('.nav-btn')).find(b=>b.dataset.panel==='meuPerfil');
+  if(perfilBtn) perfilBtn.click();
+});
+
+// Logout button
+const logoutBtn = document.getElementById('logoutBtn');
+if(logoutBtn){
+  logoutBtn.addEventListener('click', ()=>{
+    // limpa campos
+    document.getElementById('password').value = '';
+    document.getElementById('email').value = '';
+    loginMessage.textContent = '';
+    const loginBtn = Array.from(document.querySelectorAll('.nav-btn')).find(b=>b.dataset.panel==='login');
+    if(loginBtn) loginBtn.click();
+  });
+
+}
+
+// Seleção dos elementos
+const atividadesPendentes = document.querySelectorAll(".activity-card");
+const listaConcluidas = document.getElementById("atividadesConcluidas");
+
+// Função de concluir atividade
+atividadesPendentes.forEach(card => {
+  const botao = card.querySelector(".concluir-btn");
+  if(!botao) return;
+
+  botao.addEventListener("click", () => {
+    // Adiciona classe de concluído
+    card.classList.add("completed");
+
+    // Remove o botão
+    botao.remove();
+
+    // Move para lista de concluídas
+    listaConcluidas.appendChild(card);
+  });
+});
+
+// --- MATERIAIS (dados e render) ---
+const materials = [
+  {
+    id: 'historia',
+    title: 'História',
+    teacher: 'Prof. Manoel',
+    description: 'A disciplina aborda os principais acontecimentos que moldaram o mundo moderno — Idade Média, Era Moderna, Revoluções e história do Brasil. O material de apoio inclui linhas do tempo, mapas históricos e resumos de temas essenciais.',
+    resources: [
+      {type: 'PDF', label: 'Linha do tempo: Revoluções', url: '#'},
+      {type: 'Resumo', label: 'Revolução Francesa - 1 página', url: '#'}
+    ]
+  },
+  {
+    id: 'geografia',
+    title: 'Geografia',
+    teacher: 'Prof. Juliano',
+    description: 'Estudo dos elementos físicos e humanos do espaço: clima, relevo, vegetação e dinâmica populacional. Materiais: mapas, estudos de caso regionais e exercícios práticos.',
+    resources: [
+      {type: 'Mapa', label: 'Mapas das Regiões do Brasil', url: '#'},
+      {type: 'Exercício', label: 'Questões sobre clima e vegetação', url: '#'}
+    ]
+  },
+  {
+    id: 'matematica',
+    title: 'Matemática',
+    teacher: 'Profa. Franciele',
+    description: 'Foco em álgebra e geometria analítica. O material contém coleções de exercícios resolvidos, dicas de resolução e leituras rápidas sobre estratégias de prova.',
+    resources: [
+      {type: 'Exercícios', label: 'Equações e Inequações - resolvidas', url: '#'},
+      {type: 'Guia', label: 'Técnicas de resolução rápida', url: '#'}
+    ]
+  },
+  {
+    id: 'biologia',
+    title: 'Biologia',
+    teacher: 'Prof. Massao',
+    description: 'Conteúdos sobre ecologia, citologia e genética. Material de revisão com esquemas, questões comentadas e atividades laboratoriais simples.',
+    resources: [
+      {type: 'Slides', label: 'Citologia - esquema prático', url: '#'},
+      {type: 'Atividade', label: 'Experimento: observando células', url: '#'}
+    ]
+  },
+  {
+    id: 'quimica',
+    title: 'Química',
+    teacher: 'Prof. Robert',
+    description: 'Introdução à química geral, ligações químicas e estequiometria. O material inclui tabelas, exercícios com gabarito e vídeos explicativos simples.',
+    resources: [
+      {type: 'Tabela', label: 'Tabela periódica comentada', url: '#'},
+      {type: 'Exercícios', label: 'Estequiometria - gabarito', url: '#'}
+    ]
+  },
+  {
+    id: 'fisica',
+    title: 'Física',
+    teacher: 'Prof. Israel',
+    description: 'Mecânica básica e fundamentais de termodinâmica. Resumos com fórmulas essenciais, problemas resolvidos passo a passo e simuladores recomendados.',
+    resources: [
+      {type: 'Resumo', label: 'Leis de Newton - resumo', url: '#'},
+      {type: 'Problemas', label: 'Exercícios de cinemática', url: '#'}
+    ]
+  },
+  {
+    id: 'ingles',
+    title: 'Inglês',
+    teacher: 'Prof. Thiago',
+    description: 'Foco em conversação e compreensão de texto. Material com listas de vocabulário, exercícios de listening e pequenas leituras comentadas.',
+    resources: [
+      {type: 'Áudio', label: 'Listening: rotina diária', url: '#'},
+      {type: 'Lista', label: 'Phrasal verbs essenciais', url: '#'}
+    ]
+  },
+  {
+    id: 'educacao-fisica',
+    title: 'Educação Física',
+    teacher: 'Prof. Sérgio',
+    description: 'Orientações para treinos, saúde e jogos coletivos. Materiais práticos para atividades em aula e recomendações de segurança.',
+    resources: [
+      {type: 'Ficha', label: 'Treino: resistência aeróbica', url: '#'},
+      {type: 'Guia', label: 'Aquecimento e alongamento', url: '#'}
+    ]
+  },
+  {
+    id: 'portugues',
+    title: 'Português',
+    teacher: 'Prof. Tarik',
+    description: 'Ortografia, morfologia e redação dissertativa-argumentativa. Textos de apoio, modelos de redação e exercícios comentados.',
+    resources: [
+      {type: 'Modelo', label: 'Modelo de redação - estrutura', url: '#'},
+      {type: 'Exercícios', label: 'Interpretação de texto', url: '#'}
+    ]
+  }
+];
+
+function renderMaterials(){
+  const grid = document.getElementById('materialsGrid');
+  grid.innerHTML = '';
+  materials.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'material-card';
+
+    const title = document.createElement('h4');
+    title.textContent = m.title + ' • ' + m.teacher;
+
+    const desc = document.createElement('p');
+    desc.className = 'material-meta';
+    desc.textContent = m.description;
+
+    const resList = document.createElement('div');
+    resList.className = 'material-resources';
+    m.resources.forEach(r => {
+      const a = document.createElement('a');
+      a.href = r.url;
+      a.textContent = `\u2022 [${r.type}] ${r.label}`;
+      a.style.display = 'block';
+      a.style.marginTop = '6px';
+      a.className = 'link-res';
+      resList.appendChild(a);
+    });
+
+    card.appendChild(title);
+    card.appendChild(desc);
+    card.appendChild(resList);
+
+    grid.appendChild(card);
+  });
+}
+
+// Botões de ir/ver matérias
+const btnVerMaterias = document.getElementById('btnVerMaterias');
+if(btnVerMaterias){
+  btnVerMaterias.addEventListener('click', ()=>{
+    const btn = Array.from(document.querySelectorAll('.nav-btn')).find(b=>b.dataset.panel==='materiasTodos');
+    if(btn) btn.click();
+    renderMaterials();
+  });
+}
+
+const btnVoltar = document.getElementById('btnVoltarMaterias');
+if(btnVoltar){
+  btnVoltar.addEventListener('click', ()=>{
+    const btn = Array.from(document.querySelectorAll('.nav-btn')).find(b=>b.dataset.panel==='materias');
+    if(btn) btn.click();
+  });
+}
+
+// Ao abrir a aba Coordenação (exemplo de carregamento dinâmico se necessário)
+const coordBtn = Array.from(document.querySelectorAll('.nav-btn')).find(b=>b.dataset.panel==='coordenacao');
+if(coordBtn){
+  coordBtn.addEventListener('click', ()=>{
+    // poderia buscar avisos de um servidor — aqui apenas placeholder já presente no HTML
+  });
+}
+
+
+// ----------- PERMISSÕES ADMIN -----------
+const isAdmin = CURRENT_USER === "rosana@admin.com";
+
+// ----------- ADMIN – ENVIAR COMUNICADOS -----------
+if (isAdmin) {
+    const coordBox = document.querySelector("#coordenacao .card");
+
+    const form = document.createElement("div");
+    form.style.marginTop = "20px";
+
+    form.innerHTML = `
+        <h4>Enviar novo comunicado:</h4>
+        <textarea id="novoComunicado" style="width:100%;height:80px;border-radius:8px;padding:10px;"></textarea>
+        <button id="btnAddComunicado" class="btn" style="margin-top:10px;">Enviar Comunicado</button>
+    `;
+
+    coordBox.appendChild(form);
+
+    document.getElementById("btnAddComunicado").addEventListener("click", () => {
+        const texto = document.getElementById("novoComunicado").value.trim();
+        if (!texto) return;
+
+        const aviso = document.createElement("div");
+        aviso.className = "notice";
+        aviso.innerHTML = `<strong>Novo Aviso:</strong><p>${texto}</p>`;
+        coordBox.insertBefore(aviso, coordBox.children[1]);
+
+        document.getElementById("novoComunicado").value = "";
+    });
+}
+
+
+// ----------- ADMIN – EDITAR NOTAS -----------
+if (isAdmin) {
+    const linhas = document.querySelectorAll("#notas tbody tr");
+
+    linhas.forEach(linha => {
+        const bim1 = linha.children[1];
+        const bim2 = linha.children[2];
+
+        const n1 = bim1.textContent.trim();
+        const n2 = bim2.textContent.trim();
+
+        bim1.innerHTML = `<input type="number" step="0.1" value="${n1}" />`;
+        bim2.innerHTML = `<input type="number" step="0.1" value="${n2}" />`;
+    });
+
+    const salvar = document.createElement("button");
+    salvar.className = "btn";
+    salvar.textContent = "Salvar Notas";
+    salvar.style.marginTop = "16px";
+
+    document.querySelector("#notas .card").appendChild(salvar);
+
+    salvar.addEventListener("click", () => {
+        linhas.forEach(linha => {
+            const v1 = parseFloat(linha.children[1].querySelector("input").value);
+            const v2 = parseFloat(linha.children[2].querySelector("input").value);
+            const media = ((v1 + v2) / 2).toFixed(2);
+
+            linha.children[1].innerHTML = v1;
+            linha.children[2].innerHTML = v2;
+            linha.children[3].textContent = media;
+        });
+
+        alert("Notas atualizadas com sucesso!");
+    });
+}
+// Recupera usuário salvo no login
+let CURRENT_USER = localStorage.getItem("usuarioLogado") || null;
+
+// Se não estiver logado → volta para login.html
+if (!CURRENT_USER) {
+    window.location.href = "login.html";
+}
+
+// ----------- LOGOUT -----------
+document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("usuarioLogado");
+    window.location.href = "login.html";
+});
+
+
+</script>
 </body>
 </html>
+
+
+
