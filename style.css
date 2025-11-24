@@ -53,7 +53,7 @@ nav{display:flex;flex-direction:column;gap:8px;margin-top:6px}
   background:var(--beige);
   color:var(--dark);
   padding:22px;border-radius:12px;
-  box-shadow: 0 14px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 14px 40px rgba(62, 197, 9, 0);
   max-width:980px;
 }
 
